@@ -1,5 +1,9 @@
 package designchallenge1;
 
-public class Reader {
+abstract public class Reader {
+	
+	abstract void loadData();
+	abstract void printData();
+	
 
 }

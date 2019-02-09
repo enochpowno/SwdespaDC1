@@ -1,43 +1,50 @@
 package designchallenge1;
 
-public class Event {
+abstract class Event {
 	
-	public int nMonth, nDay, nYear;
-	public String event;
-	public String color;
+	private int nMonth;
+	private int nDay;
+	private int nYear;
+	private String eventName;
+	private String color;
 	
-	public Event(int nMonth, int nDay, int nYear, String event, String color) {
+	
+	public String getEventName() {
+		return eventName;
+	}
+
+	public void setEventName(String eventName) {
+		this.eventName = eventName;
+	}
+
+	public void setnMonth(int nMonth) {
 		this.nMonth = nMonth;
+	}
+
+	public void setnDay(int nDay) {
 		this.nDay = nDay;
+	}
+
+	public void setnYear(int nYear) {
 		this.nYear = nYear;
-		this.event = event;
+	}
+
+	public void setColor(String color) {
 		this.color = color;
-		
 	}
-	
-	public boolean checkYearMonth() {
-		//check if hindi legit yung date
-		return false;
-		
-	}
-	
-	public boolean checkSameDate() {
-		//if same day, attach lang yung event
-		return false;
-	}
-	
+
 	public int getnMonth() {
 		return nMonth;
 	}
+	
 	public int getnDay() {
 		return nDay;
 	}
+	
 	public int getnYear() {
 		return nYear;
 	}
-	public String getEvent() {
-		return event;
-	}
+	
 	public String getColor() {
 		return color;
 	}

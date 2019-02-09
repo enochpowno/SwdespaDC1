@@ -1,4 +1,4 @@
-package values;
+package Observer;
 
 public enum AppStrings {
 	NOEVENTS;

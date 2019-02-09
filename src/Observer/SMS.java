@@ -1,4 +1,4 @@
-package sms;
+package Observer;
 
 import java.awt.Color;
 import java.util.Calendar;

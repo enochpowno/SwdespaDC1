@@ -13,8 +13,6 @@ import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
 
-import designchallenge1.TableRenderer;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;

@@ -1,6 +1,5 @@
 package GUI;
 
-import designchallenge1.WriteEvents;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
@@ -15,12 +14,11 @@ import java.awt.Color;
 import java.awt.Font;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar; //https://www.javatpoint.com/java-util-calendar
 
 //GUI for adding an event
 public class CalendarFrame extends JFrame {
 
-	Calendar date = Calendar.getInstance();//https://www.javatpoint.com/java-util-calendar 
+	
 	
 	
 }

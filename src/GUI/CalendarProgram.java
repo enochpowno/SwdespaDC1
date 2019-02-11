@@ -13,11 +13,16 @@ import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
 
+import Observer.FBView;
+import Observer.SMSView;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
-import designchallenge1.PS;
+import designchallenge1.PSVReader;
+import designchallenge1.CSVReader;
+import designchallenge1.ReadFromWriteEvents;
 
 public class CalendarProgram{
 	
@@ -37,7 +42,15 @@ public class CalendarProgram{
 	public JTable calendarTable;
         public DefaultTableModel modelCalendarTable;
         
-        
+        PSVReader psvReader = new PSVReader();
+        CSVReader csvReader = new CSVReader();
+        ReadFromWriteEvents writeEvents = new ReadFromWriteEvents();
+        int clickedMonth = 0;
+        int clickedYear = 0;
+        private FBView f1 = new FBView();
+        private SMSView s1 = new SMSView();
+        CalendarFrame c1;
+        		
         
         public void refreshCalendar(int month, int year)
         {
@@ -75,7 +88,24 @@ public class CalendarProgram{
 			for(j = 0; j < 7; j++) {
 				if(modelCalendarTable.getValueAt(i, j) != null) {
 					String[] split = modelCalendarTable.getValueAt(i, j).toString().split(" ");
-					for (int a = 0; a < )
+					
+					for (int a = 0; a < csvReader.getUploadCsvList().size(); a++ ) {
+						if(Integer.valueOf(split[0]) == csvReader.getUploadCsvList().get(a).getnDay() && month + 1 == csvReader.getUploadCsvList().get(a).getnMonth())
+							modelCalendarTable.setValueAt(modelCalendarTable.getValueAt(i, j) + " " + csvReader.getUploadCsvList().get(a).getEventName(), i, j );
+					}
+					
+					for(int a = 0; a < psvReader.getUploadPsvList().size(); a++) {
+						if(Integer.valueOf(split[0]) == psvReader.getUploadPsvList().get(a).getnDay() && month + 1 == psvReader.getUploadPsvList().get(a).getnMonth() && year == psvReader.getUploadPsvList().get(a).getnYear())
+							modelCalendarTable.setValueAt(modelCalendarTable.getValueAt(i, j) + " " + psvReader.getUploadPsvList().get(a).getEventName(), i, j);
+							
+					}
+					
+					for(int a = 0; a < writeEvents.getWriteEventsList().size(); a++ ) {
+						if(Integer.valueOf(split[0]) == writeEvents.getWriteEventsList().get(a).getnDay() && month + 1 == writeEvents.getWriteEventsList().get(a).getnMonth() && year == writeEvents.getWriteEventsList().get(a).getnYear() )
+							modelCalendarTable.setValueAt(modelCalendarTable.getValueAt(i, j) + " " + writeEvents.getWriteEventsList().get(a).getEventName(), i, j);
+					}
+				
+					System.out.println("Month: " + c1);
 				}
 					
 			}
@@ -84,8 +114,9 @@ public class CalendarProgram{
 		calendarTable.setDefaultRenderer(calendarTable.getColumnClass(0), new TableRenderer());
 	}
         
-	public CalendarProgram()
+	public CalendarProgram(CalendarFrame c1)
         {
+		this.c1 = c1;
 		try {
                     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                 }
@@ -117,6 +148,8 @@ public class CalendarProgram{
                     {  
                         int col = calendarTable.getSelectedColumn();  
                         int row = calendarTable.getSelectedRow();  
+                        c1.setVisible(true);
+                        
                     }
                 });
                 

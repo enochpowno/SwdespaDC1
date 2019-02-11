@@ -17,6 +17,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
+import designchallenge1.PS;
+
 public class CalendarProgram{
 	
         /**** Day Components ****/
@@ -34,6 +36,8 @@ public class CalendarProgram{
         /**** Calendar Table Components ***/
 	public JTable calendarTable;
         public DefaultTableModel modelCalendarTable;
+        
+        
         
         public void refreshCalendar(int month, int year)
         {
@@ -66,7 +70,17 @@ public class CalendarProgram{
 			int column  =  (i+som-2)%7;
 			modelCalendarTable.setValueAt(i, row, column);
 		}
-
+		
+		for(i = 0; i < 6; i ++) {
+			for(j = 0; j < 7; j++) {
+				if(modelCalendarTable.getValueAt(i, j) != null) {
+					String[] split = modelCalendarTable.getValueAt(i, j).toString().split(" ");
+					for (int a = 0; a < )
+				}
+					
+			}
+		}
+		
 		calendarTable.setDefaultRenderer(calendarTable.getColumnClass(0), new TableRenderer());
 	}
         

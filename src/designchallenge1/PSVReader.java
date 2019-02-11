@@ -10,7 +10,7 @@ public class PSVReader extends Reader {
 	public ArrayList<UploadPsv> UploadPsvList = new ArrayList<>();
 	
 	@Override
-	void loadData() {
+	public void loadData() {
 		// TODO Auto-generated method stub
 		File file = new File("DLSU Unicalendar.psv");
 		try {
@@ -42,7 +42,7 @@ public class PSVReader extends Reader {
 }
 
 	@Override
-	void printData() {
+	public void printData() {
 		// TODO Auto-generated method stub
 		System.out.println("-------------FROM PSV-------------");
         for(int i = 0; i<UploadPsvList.size(); i++) {

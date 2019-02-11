@@ -24,7 +24,7 @@ public class CSVReader extends Reader {
 	private ArrayList<UploadCsv> UploadCsvList = new ArrayList<>();
 	
 	@Override
-	void loadData() {
+	public void loadData() {
 		// TODO Auto-generated method stub
 		File file = new File("Philippine Holidays.csv");
 		try {
@@ -52,7 +52,7 @@ public class CSVReader extends Reader {
 	}
 
 	@Override
-	void printData() {
+	public void printData() {
 		// TODO Auto-generated method stub
 		System.out.println("-------------FROM CSV-------------");
         for(int i = 0; i<UploadCsvList.size(); i++) {

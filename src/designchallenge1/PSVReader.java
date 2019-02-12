@@ -12,7 +12,7 @@ public class PSVReader extends Reader {
 	@Override
 	public void loadData() {
 		// TODO Auto-generated method stub
-		File file = new File("DLSU Unicalendar.psv");
+		File file = new File("//DLSU Unicalendar.psv");
 		try {
 			//@SuppressWarnings("resource") 
 			Scanner scan = new Scanner(new FileReader(file));
@@ -35,9 +35,9 @@ public class PSVReader extends Reader {
 		} catch (FileNotFoundException  e) {
 			// TODO: handle exception
 			e.printStackTrace();
-		} /*catch (IOException e){
+		} catch (IOException e){
             e.printStackTrace();
-        }*/
+        }
 		printData();
 }
 

@@ -104,6 +104,8 @@ public class CalendarProgram{
 						if(Integer.valueOf(split[0]) == writeEvents.getWriteEventsList().get(a).getnDay() && month + 1 == writeEvents.getWriteEventsList().get(a).getnMonth() && year == writeEvents.getWriteEventsList().get(a).getnYear() )
 							modelCalendarTable.setValueAt(modelCalendarTable.getValueAt(i, j) + " " + writeEvents.getWriteEventsList().get(a).getEventName(), i, j);
 					}
+					
+					//for(int a = 0; a )
 				
 					System.out.println("Month: " + c1);
 				}

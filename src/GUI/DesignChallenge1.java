@@ -18,15 +18,15 @@ public class DesignChallenge1 {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        //CalendarFrame c1 = new CalendarFrame();
-    	//CalendarProgram cp = new CalendarProgram(c1);
-    	//c1.attachProgram(cp);
+        CalendarFrame c1 = new CalendarFrame();
+    	CalendarProgram cp = new CalendarProgram(c1);
+    	c1.attachProgram(cp);
     	
-    	/*
+    	
     	CSVReader csvReader = new CSVReader();
-    	PSVReader psvReader = new PSVReader();
     	csvReader.loadData();
+    	PSVReader psvReader = new PSVReader();
     	psvReader.loadData();
-        */
+        
     }
 }

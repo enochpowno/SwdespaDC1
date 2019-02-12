@@ -7,7 +7,7 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 
 
-public class CSVReader extends Reader {
+public class CSVReader /*HolidaysPublic*/ extends Reader {
 
 	/*String csvFile = "C:\\Users\\Enoch\\Desktop\\DLSU\\SWDESPA\\DC 1\\Sample Files ";
 	String line = "";

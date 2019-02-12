@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
-public class ReadFromWriteEvents extends Reader{
+public class ReadFromWriteEvents /*HolidaysAdded*/ extends Reader{
 	
 	public ArrayList<WriteEvents> WriteEventsList = new ArrayList<>();
 

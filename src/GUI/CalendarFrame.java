@@ -18,6 +18,10 @@ import java.util.ArrayList;
 
 //GUI for adding an event
 public class CalendarFrame extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	CalendarProgram c1;
 	private JPanel contentPane;
 	private JTextField namefield;

@@ -19,10 +19,15 @@ import Observer.SMSView;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
+import java.time.Month;
+
 
 import designchallenge1.PSVReader;
 import designchallenge1.CSVReader;
 import designchallenge1.ReadFromWriteEvents;
+import Observer.FBView;
+import Observer.SMSView;
+
 
 public class CalendarProgram{
 	
@@ -44,7 +49,7 @@ public class CalendarProgram{
         
         PSVReader psvReader = new PSVReader();
         CSVReader csvReader = new CSVReader();
-        ReadFromWriteEvents writeEvents = new ReadFromWriteEvents();
+        ReadFromWriteEvents readfromwriteEvents = new ReadFromWriteEvents();
         int clickedMonth = 0;
         int clickedYear = 0;
         private FBView f1 = new FBView();
@@ -100,14 +105,19 @@ public class CalendarProgram{
 							
 					}
 					
-					for(int a = 0; a < writeEvents.getWriteEventsList().size(); a++ ) {
-						if(Integer.valueOf(split[0]) == writeEvents.getWriteEventsList().get(a).getnDay() && month + 1 == writeEvents.getWriteEventsList().get(a).getnMonth() && year == writeEvents.getWriteEventsList().get(a).getnYear() )
-							modelCalendarTable.setValueAt(modelCalendarTable.getValueAt(i, j) + " " + writeEvents.getWriteEventsList().get(a).getEventName(), i, j);
+					for(int a = 0; a < readfromwriteEvents.getWriteEventsList().size(); a++ ) {
+						if(Integer.valueOf(split[0]) == readfromwriteEvents.getWriteEventsList().get(a).getnDay() && month + 1 == readfromwriteEvents.getWriteEventsList().get(a).getnMonth() && year == readfromwriteEvents.getWriteEventsList().get(a).getnYear() )
+							modelCalendarTable.setValueAt(modelCalendarTable.getValueAt(i, j) + " " + readfromwriteEvents.getWriteEventsList().get(a).getEventName(), i, j);
 					}
 					
 					//for(int a = 0; a )
 				
-					System.out.println("Month: " + c1);
+					System.out.println("Month: " + c1.getMonth());
+					System.out.println("Month orig: " + month);
+					System.out.println("Year: " + c1.getYear());
+					if(c1.getDay() == Integer.valueOf(split[0]) && clickedMonth == month + 1 && clickedYear == c1.getYear()){
+						modelCalendarTable.setValueAt(modelCalendarTable.getValueAt(i, j) + " " + c1.getEventName(), i, j);
+					}
 				}
 					
 			}
@@ -151,7 +161,11 @@ public class CalendarProgram{
                         int col = calendarTable.getSelectedColumn();  
                         int row = calendarTable.getSelectedRow();  
                         c1.setVisible(true);
-                        
+                        c1.setDay((int) (calendarTable.getValueAt(row, col)));
+                        c1.setMonth(Month.valueOf(monthLabel.getText().toUpperCase()).getValue());
+                        clickedMonth = Month.valueOf(monthLabel.getText().toUpperCase()).getValue();
+                        c1.setYear(Integer.parseInt(cmbYear.getSelectedItem().toString()));
+                        clickedYear = Integer.parseInt(cmbYear.getSelectedItem().toString());
                     }
                 });
                 
@@ -212,7 +226,41 @@ public class CalendarProgram{
                 {
 			cmbYear.addItem(String.valueOf(i));
 		}
-		
+		int month = 0;
+        int year = 0;
+
+        // Load School Holidays
+        psvReader.loadData();
+        for(int i = 0; i < psvReader.getUploadPsvList().size(); i++){
+            month = psvReader.getUploadPsvList().get(i).getnMonth();
+            year = psvReader.getUploadPsvList().get(i).getnYear();
+
+            //System.out.println("Month: " + holidaysSchool.uploadHolidayList.get(i).getEventMonth());
+            //System.out.println("Year: " + holidaysSchool.uploadHolidayList.get(i).getEventYear());
+
+            monthBound = month - 1;
+            yearBound = year;
+        }
+        // Load Public Holidays
+        csvReader.loadData();
+        for(int i = 0; i < csvReader.getUploadCsvList().size(); i++){
+            month = csvReader.getUploadCsvList().get(i).getnMonth();
+            year = csvReader.getUploadCsvList().get(i).getnYear();
+
+            
+            monthBound = month;
+            yearBound = year;
+        }
+        // Load Added Events
+        psvReader.loadData();
+        for(int i = 0; i < psvReader.getUploadPsvList().size(); i++){
+            month = psvReader.getUploadPsvList().get(i).getnMonth();
+            year = psvReader.getUploadPsvList().get(i).getnYear();
+
+          
+            monthBound = month;
+            yearBound = year;
+        }
 		refreshCalendar (monthBound, yearBound); //Refresh calendar
 	}
 	
@@ -261,4 +309,81 @@ public class CalendarProgram{
 			}
 		}
 	}
+	
+	public PSVReader getHolidaysSchool() {
+        return psvReader;
+    }
+	
+	public void setHolidaysFromSchool(PSVReader psvReader) {
+		this.psvReader = psvReader;
+	    }
+
+	public CSVReader getHolidaysPublic() {
+		return csvReader;
+	    }
+
+	public void setHolidaysPublic(CSVReader csvReader) {
+		this.csvReader = csvReader;
+	    }
+
+	public ReadFromWriteEvents getHolidaysAdded() {
+		return readfromwriteEvents;
+	    }
+
+	public void setHolidaysAdded(ReadFromWriteEvents readFromWriteEvents) {
+		this.readfromwriteEvents = readFromWriteEvents;
+	    }
+	
+	public JTable getCalendarTable() {
+        return calendarTable;
+    }
+
+    public void setCalendarTable(JTable calendarTable) {
+        this.calendarTable = calendarTable;
+    }
+
+    public int getYearBound() {
+        return yearBound;
+    }
+
+    public void setYearBound(int yearBound) {
+        this.yearBound = yearBound;
+    }
+
+    public int getMonthBound() {
+        return monthBound;
+    }
+
+    public void setMonthBound(int monthBound) {
+        this.monthBound = monthBound;
+    }
+
+    public int getDayBound() {
+        return dayBound;
+    }
+
+    public void setDayBound(int dayBound) {
+        this.dayBound = dayBound;
+    }
+
+    public int getYearToday() {
+        return yearToday;
+    }
+
+    public void setYearToday(int yearToday) {
+        this.yearToday = yearToday;
+    }
+
+    public int getMonthToday() {
+        return monthToday;
+    }
+
+    public void setMonthToday(int monthToday) {
+        this.monthToday = monthToday;
+    }
+    
+    public void attachEventWindow(CalendarFrame c1) {
+    	this.c1 = c1;
+    }
+
 }

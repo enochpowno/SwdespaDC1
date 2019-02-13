@@ -40,7 +40,6 @@ public class SMS {
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return eventName + "\n" + (date.get(Calendar.MONTH)+1) + "/" + date.get(Calendar.DAY_OF_MONTH) + "/" + date.get(Calendar.YEAR);
 	}
 }

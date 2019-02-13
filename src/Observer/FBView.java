@@ -61,7 +61,7 @@ public class FBView extends JFrame{
 			paneFeed.setText("");
 		
 		eventNo++;
-	    Style eventStyle = sc.addStyle("Event"+eventNo, null);
+	    Style eventStyle = sc.addStyle("designchallenge1.Event"+eventNo, null);
 	    eventStyle.addAttribute(StyleConstants.Foreground, eventColor);
 	    eventStyle.addAttribute(StyleConstants.FontSize, new Integer(16));
 	    eventStyle.addAttribute(StyleConstants.FontFamily, "serif");

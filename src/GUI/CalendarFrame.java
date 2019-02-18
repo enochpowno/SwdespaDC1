@@ -1,6 +1,9 @@
 package GUI;
 
+import Data.CSVReader;
+import Events.UploadCSV;
 import Events.UploadedAddEvent;
+import Data.HolidaysAdded;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -8,6 +11,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Color;
@@ -19,13 +24,17 @@ public class
 CalendarFrame extends JFrame {
 	CalendarProgram c1;
 	private JPanel contentPane;
-	private JTextField namefield;
+	private JPanel colorPane;
+	private JTextField namefield, colorfield;
+	private JButton Addbtn, ExitBtn;
+
 
 	private int month;
 	private int day;
 	private int year;
 	private String color;
-
+	private ArrayList<UploadedAddEvent> addEvents;
+	private UploadCSV csvWriter;
 
 	public void update() throws IOException {
 		System.out.println("Details:");
@@ -34,21 +43,25 @@ CalendarFrame extends JFrame {
 		System.out.println(getDay());
 		System.out.println(getYear());
 		System.out.println(getColor());
-
-		ArrayList<UploadedAddEvent> addEvents = new ArrayList<>();
+/*
+		HolidaysAdded ha = new HolidaysAdded();
+		ha.getAddEventList().indexOf();
+*/
 		UploadedAddEvent addEvent = new UploadedAddEvent();
-		int ctr = 0;
-		addEvents.add(new UploadedAddEvent(month, day, year, namefield.getText(), color));
-		addEvent.uploadAddedEvents(addEvents, ctr);
-		ctr++;
-
+//		int ctr = 0;
+		addEvents.add(new UploadedAddEvent(getMonth(), getDay(), getYear(), namefield.getText(), color));
+		addEvent.uploadAddedEvents(addEvents);
+//		ctr++;
+		c1.refreshCalendar(month, year);
 	}
 
 	public JTextField getNamefield() {
+
 		return namefield;
 	}
 
 	public void setNamefield(JTextField namefield) {
+
 		this.namefield = namefield;
 	}
 
@@ -111,93 +124,109 @@ CalendarFrame extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
+/*
+		colorPane = new JPanel();
+		colorPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+*/
 		namefield = new JTextField();
 		namefield.setBounds(124, 78, 241, 20);
 		contentPane.add(namefield);
 		namefield.setColumns(10);
 
+		colorfield = new JTextField();
+		colorfield.setBounds(124, 120, 241, 20);
+		contentPane.add(colorfield);
+		colorfield.setColumns(10);
+
+		JLabel lblColor = new JLabel("Cell Color: ");
+		lblColor.setBounds(44, 120, 89, 14);
+		contentPane.add(lblColor);
+
 		JLabel lblEventName = new JLabel("Event Name: ");
 		lblEventName.setBounds(44, 81, 89, 14);
 		contentPane.add(lblEventName);
-
-		// RED BUTTON
-		JButton btnRed = new JButton("Red");
-		btnRed.setBackground(Color.RED);
-		btnRed.setBounds(124, 160, 89, 23);
-		btnRed.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				if(!namefield.getText().equals("")) {
-					setVisible(false);
-					setColor("red");
-//					Color.RED;
-					try {
-						update();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-				System.out.println("Red Button Clicked");
-				//c1.refreshCalendar(month, year);
-			}
-		});
-		contentPane.add(btnRed);
-
-		// BLUE BUTTON
-		JButton btnBlue = new JButton("Blue");
-		btnBlue.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				if(!namefield.getText().equals("")) {
-					setVisible(false);
-					setColor("blue");
-					try {
-						update();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-				System.out.println("Blue Button Clicked");
-				//	c1.refreshCalendar(month, year);
-			}
-
-		});
-		btnBlue.setBackground(Color.BLUE);
-		btnBlue.setBounds(124, 194, 89, 23);
-		contentPane.add(btnBlue);
-
-		// GREEN BUTTON
-		JButton btnGreen = new JButton("Green");
-		btnGreen.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				if(!namefield.getText().equals("")) {
-					setVisible(false);
-					setColor("green");
-					try {
-						update();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-				System.out.println("Green Button Clicked");
-				System.out.println(getNamefield().getText());
-
-			}
-		});
-		btnGreen.setBackground(Color.GREEN);
-		btnGreen.setForeground(Color.BLACK);
-		btnGreen.setBounds(124, 126, 89, 23);
-		contentPane.add(btnGreen);
-
-		JLabel lblEventColor = new JLabel("Event Color:");
-		lblEventColor.setBounds(44, 130, 89, 14);
-		contentPane.add(lblEventColor);
 
 		JLabel lblAddEvent = new JLabel("Add Event");
 		lblAddEvent.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblAddEvent.setBounds(164, 0, 294, 95);
 		contentPane.add(lblAddEvent);
+
+		// ADD BUTTON
+		JButton Addbtn = new JButton("Add Event");
+		Addbtn.setBackground(Color.WHITE);
+		Addbtn.setBounds(175, 160, 95, 23);
+		//Addbtn.addActionListener(new doActionListener());
+		Addbtn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(!namefield.getText().equals("") && !colorfield.getText().equals("")){
+					setVisible(false);
+					String temp = colorfield.getText();
+					setColor(temp);
+					try{
+						update();
+					} catch (IOException a){
+						a.printStackTrace();
+					}
+
+				}
+			}
+		});
+		contentPane.add(Addbtn);
+
+		// EXIT BUTTON
+		JButton Exitbtn = new JButton("Exit");
+		Exitbtn.setBackground(Color.WHITE);
+		Exitbtn.setBounds(175, 200, 95, 23);
+		//Exitbtn.addActionListener(new doActionListener());
+		Exitbtn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.exit(0);
+			}
+		});
+		contentPane.add(Exitbtn);
+
+/***							INIT 	        								***/
+		//ArrayList initialization for storing all events added by the user
+		initAddEvents();
+/***																			***/
+
+		/*JLabel lblEventColor = new JLabel("Event Color:");
+		lblEventColor.setBounds(44, 130, 89, 14);
+		contentPane.add(lblEventColor);*/
+
 	}
+
+	private void initAddEvents(){
+		HolidaysAdded data = new HolidaysAdded();
+		data.loadData();
+		addEvents = data.getAddEventList();
+	}
+/*
+	public class doActionListener implements ActionListener{
+
+			public void actionPerformed(ActionEvent action){
+				if(action.getSource() == Addbtn){
+					namefield.getText();
+					colorfield.getText();
+					contentPane.setVisible(false);
+					try{
+
+						//colorPane.setVisible(true);
+						update();
+
+					} catch (IOException e){
+
+					}
+				} else if (action.getSource() == ExitBtn);{
+					System.exit(0);
+				}
+
+			}
+
+	}
+*/
 }

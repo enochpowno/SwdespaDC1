@@ -21,11 +21,8 @@ public class DesignChallenge1 {
         CalendarFrame e1 = new CalendarFrame();
     	CalendarProgram cp = new CalendarProgram(e1);
     	e1.attachProgram(cp);
-    	
-    	CSVReader CSVReader = new CSVReader();
-        CSVReader.loadData();
-        PSVReader PSVReader = new PSVReader();
-        PSVReader.loadData();
+
+
 
     }
 }

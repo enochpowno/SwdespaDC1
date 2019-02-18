@@ -21,6 +21,8 @@ import Observer.SMSView;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.Date;
+import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.*;
 
@@ -85,7 +87,7 @@ public class CalendarProgram{
 			int column  =  (i+som-2)%7;
 			modelCalendarTable.setValueAt(i, row, column);
 		}
-        /*******************************************************************************/
+
        // CalendarFrame e1 = new CalendarFrame();
 
 		for(i = 0; i<6; i++){
@@ -119,7 +121,7 @@ public class CalendarProgram{
 				}
 			}
 		}
-        /*******************************************************************************/
+
 		calendarTable.setDefaultRenderer(calendarTable.getColumnClass(0), new TableRenderer());
 	}
         
@@ -155,7 +157,7 @@ public class CalendarProgram{
 		    public void mouseClicked(MouseEvent evt) {
 		        int col = calendarTable.getSelectedColumn();
 		        int row = calendarTable.getSelectedRow();
-				/*******************************************************************************/
+				/********/
 				//CalendarFrame e1 = new CalendarFrame();
 				e1.setVisible(true);
                 e1.setDay((int)(calendarTable.getValueAt(row,col)));
@@ -170,7 +172,7 @@ public class CalendarProgram{
 				//System.out.println(cmbYear.getSelectedItem().toString());
 				//System.out.println(e1.getDay());
 				//System.out.println(e1.getColor());
-		        /*******************************************************************************/
+		        /********/
 		    }
 		    });
 		scrollCalendarTable = new JScrollPane(calendarTable);
@@ -229,7 +231,7 @@ public class CalendarProgram{
 		for (int i = yearBound-100; i <= yearBound+100; i++) {
 			cmbYear.addItem(String.valueOf(i));
 		}
-        /*******************************************************************************/
+        /****/
         int month = 0;
         int year = 0;
 
@@ -239,8 +241,6 @@ public class CalendarProgram{
             month = PSVReader.uploadCSVList.get(i).getEventMonth();
             year = PSVReader.uploadCSVList.get(i).getEventYear();
 
-            //System.out.println("Month: " + PSVReader.uploadCSVList.get(i).getEventMonth());
-            //System.out.println("Year: " + PSVReader.uploadCSVList.get(i).getEventYear());
 
             monthBound = month - 1;
             yearBound = year;
@@ -251,25 +251,26 @@ public class CalendarProgram{
             month = CSVReader.getUploadEventList().get(i).getEventMonth();
             year = CSVReader.getUploadEventList().get(i).getEventYear();
 
-            //System.out.println("Month: " + CSVReader.getUploadEventList().get(i).getEventMonth());
-            //System.out.println("Year: " + CSVReader.getUploadEventList().get(i).getEventYear());
 
             monthBound = month;
             yearBound = year;
         }
         // Load Added Events
-        CSVReader.loadData();
-        for(int i = 0; i < CSVReader.getUploadEventList().size(); i++){
-            month = CSVReader.getUploadEventList().get(i).getEventMonth();
-            year = CSVReader.getUploadEventList().get(i).getEventYear();
+		holidaysAdded.loadData();
+        for(int i = 0; i < holidaysAdded.getAddEventList().size(); i++){
+            month = holidaysAdded.getAddEventList().get(i).getEventMonth();
+            year = holidaysAdded.getAddEventList().get(i).getEventYear();
 
-            //System.out.println("Month: " + CSVReader.getUploadEventList().get(i).getEventMonth());
-            //System.out.println("Year: " + CSVReader.getUploadEventList().get(i).getEventYear());
 
             monthBound = month;
             yearBound = year;
         }
-          /*******************************************************************************/
+
+        yearBound = LocalDateTime.now().getYear();
+        monthBound = LocalDateTime.now().getMonthValue() - 1;
+		System.out.println("yeytae " + monthBound);
+		/****/
+		refreshCalendar (monthBound, yearBound); //Refresh calendar
 		refreshCalendar (monthBound, yearBound); //Refresh calendar
 	}
 

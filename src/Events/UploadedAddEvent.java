@@ -18,36 +18,38 @@ public class UploadedAddEvent extends Event {
         setEventColor(eventColor);
     }
 
-    public void uploadAddedEvents(ArrayList<UploadedAddEvent> addEventArrayList, int ctr) throws IOException {
+    public void uploadAddedEvents(ArrayList<UploadedAddEvent> addEventArrayList) throws IOException {
 
         try{
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("AddedEvents.csv")));
-                StringBuffer writerBuffer = new StringBuffer();
 
-                //Month
-                writerBuffer.append(addEventArrayList.get(ctr).getEventMonth());
-                writerBuffer.append(CSV_SEPARATOR_SLASH);
 
-                //Day
-                writerBuffer.append(addEventArrayList.get(ctr).getEventDay());
-                writerBuffer.append(CSV_SEPARATOR_SLASH);
+                for (int i = 0; i < addEventArrayList.size(); i++) {
+                    StringBuffer writerBuffer = new StringBuffer();
+                    //Month
+                    writerBuffer.append(addEventArrayList.get(i).getEventMonth());
+                    writerBuffer.append(CSV_SEPARATOR_SLASH);
 
-                //Year
-                writerBuffer.append(addEventArrayList.get(ctr).getEventYear());
-                writerBuffer.append(CSV_SEPARATOR_COMMA);
+                    //Day
+                    writerBuffer.append(addEventArrayList.get(i).getEventDay());
+                    writerBuffer.append(CSV_SEPARATOR_SLASH);
 
-                //Name
-                writerBuffer.append(addEventArrayList.get(ctr).getEventName());
-                writerBuffer.append(CSV_SEPARATOR_COMMA);
+                    //Year
+                    writerBuffer.append(addEventArrayList.get(i).getEventYear());
+                    writerBuffer.append(CSV_SEPARATOR_COMMA);
 
-                //Color
-                writerBuffer.append(addEventArrayList.get(ctr).getEventColor());
+                    //Name
+                    writerBuffer.append(addEventArrayList.get(i).getEventName());
+                    writerBuffer.append(CSV_SEPARATOR_COMMA);
 
-                writer.write(writerBuffer.toString());
-                writer.newLine();
+                    //Color
+                    writerBuffer.append(addEventArrayList.get(i).getEventColor());
 
-            writer.flush();
-            writer.close();
+                    writer.write(writerBuffer.toString());
+                    writer.newLine();
+                }
+                writer.flush();
+                writer.close();
             }
             catch (UnsupportedEncodingException e) {}
             catch (FileNotFoundException e){}

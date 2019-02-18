@@ -14,13 +14,13 @@ public class HolidaysAdded extends Reader {
     public ArrayList<UploadedAddEvent> addEventList = new ArrayList<>();
 
     @Override
-    void loadData() {
+    public void loadData() {
         File file = new File("AddedEvents.csv");
         try {
             Scanner scn = new Scanner(new FileReader(file));
             while (scn.hasNext()) {
                 String eventNextLine = scn.nextLine();
-                StringTokenizer eventSplit = new StringTokenizer(eventNextLine);
+                StringTokenizer eventSplit = new StringTokenizer(eventNextLine, "//,");
                 while (eventSplit.hasMoreTokens()) {
                     UploadedAddEvent addEventTemp = new UploadedAddEvent();
                     addEventTemp.setEventMonth(Integer.valueOf(eventSplit.nextToken()));
@@ -54,6 +54,7 @@ public class HolidaysAdded extends Reader {
     }
 
     public ArrayList<UploadedAddEvent> getAddEventList() {
+
         return addEventList;
     }
 
